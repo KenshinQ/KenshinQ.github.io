@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>KenshinQ's Blog - kenshinQ KenshinQ's Blog</title>
+
+    <link rel="stylesheet" href="/theme/css/main.css">
+    <link rel="stylesheet" href="/theme/css/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div><img src="" class="grv-img"/></div>
+        <div class="title"><a href="/">KenshinQ's Blog </a></div>
+        <div class="sub-title"></div>
+
+<p>
+  <div class="view"><a href="/archives.html">Archives</a></div>
+</p>
+
+<!-- Social links -->
+<div class="social">
+<h4>Follow Me</h4>
+<ul>
+    <li><a href="#">You can add links in your config file</a></li>
+    <li><a href="#">Another social link</a></li>
+</ul>
+</div>
+
+      </header>
+      <section>
+      <div class="front-title"><a href="/my-fist-blog.html">My fist blog</a></div>
+<p>
+<small>
+<abbr class="published" title="2014-03-30T13:17:00">
+  日 30 三月 2014
+</abbr> | 
+  tags: 
+    <a href="/tag/pelican.html">pelican</a>, 
+    <a href="/tag/publishing.html">publishing</a>, 
+ -- (<a href="/my-fist-blog.html" rel="bookmark">permalink</a>)
+</small>
+</p>      <blockquote>
+<p>This is the content of my first blog post.</p>
+</blockquote> 
+      <div class="read-more"><a href="/my-fist-blog.html">read more...</a></div>
+      <hr />
+
+      </section>
+      <footer>
+        <p><small>&copy; KenshinQ's Blog &mdash; Theme based on Sundown by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <!-- Scale fix -->
+    <script>
+      var metas = document.getElementsByTagName('meta');
+      var i;
+      
+      if (navigator.userAgent.match(/iPhone/i)) {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+          }
+        }
+      
+        document.addEventListener("gesturestart", gestureStart, false);
+      }
+
+      function gestureStart() {
+        for (i=0; i<metas.length; i++) {
+          if (metas[i].name == "viewport") {
+            metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
