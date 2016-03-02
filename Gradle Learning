@@ -17,3 +17,34 @@ Groovy可以定义类，而Groovy中不是定义在类中的代码则为脚本�
 为脚本类的属性，于是脚本对象的方法可以随时访问这个变量。
 二、Gradle介绍及使用
 Gradle是一个工具，其本质是一个编程框架，所有的工作是通过各种Gradle api的使用来完成工作。
+使用Gradle来编译一个待编译的工程都叫一个projcet,而每一个project在的构建包含一系列的Task，而编译一个project包含多少个task，是由编译脚本
+指定的插件决定的。插件是什么呢？插件是用来定义task，并执行task的东西。
+Gradle作为一个框架，负责定义流程和规则，而具体的编译工作则由具体的插件来完成。比如编译Java有java插件，编译android app有android app插件，
+编译android library有android library插件。每一个project对应一个build.gradle脚本文件，Gradle支持多project一起构建，当要多project一起
+构建的时候，需要在根project目录添加一个settings.gradle文件来指定要一起构建的工程。
+Gradle的工作流程是：
+1.初始化阶段，这个时候如果有settings.gradle，则会执行settings.gradle
+2.配置阶段，这个时候每个project的build.gradle都会被解析，以建立任务的有向图，确定执行过程中任务的依赖关系
+3.执行阶段，你在执行命令gradle xxx，xxx指定的任务链上的所有任务全部会按依赖关系执行一遍。
+因为Gradle是基于Groovy的，所以Gradle脚本在执行的时候也会被转换为java类对象。Gradle中主要有三类对象：
+1.Gradle对象，当我们在执行gradle xxx的时候，gradle会从默认的配置脚本中构造出一个Gradle对象，在构建执行过程中，只有一个Gradle对象。
+2.Project对象，每一个build.gradle会被转换为一个Project对象。
+3.Settings对象，每一个settings.gradle会被转换为一个Settings对象。
+而其他的gradle文件，除非是定义的class，否则一般都是转换成一个实现了Script接口的对象，和Groovy脚本差不多。
+Gradle中有一个额外属性的概念（extra property），可以通过在第一次定义或使用某一个属性的时候，加一个ext前缀来标识它是一个额外属性，这样
+就会为对象增加一个额外的属性，以后可以随便访问使用这个额外属性，并且不需要ext前缀。Project对象和Gradle对象支持额外属性的特性。定义
+额外属性有两种方式，一种方式是 对象.ext.属性名=value，另一种是对象.ext{属性名 = value}。
+Groovy中脚本类对象会有一个delegate属性，所以Gradle中，其他gradle脚本文件转换生成的脚本类对象都会有一个delegate属性，而在Gradle中，如果
+在脚本对象中找不到变量或函数的时候，就会去它的delegate对象中去找，而在build.gradle中通过apply加载的gradle脚本时，会把这个脚本转换为
+脚本对象，并且，默认设置它的delegate属性为加载它的project对象。
+Gradle中的Project对象有一些预置的script block脚本块，通常构建的配置都在这些脚本块中进行，这些脚本块的本质呢，基本上就是闭包代码。
+有一些常见的script block需要熟悉：
+allprojects{}----用来配置当前project和所有子project
+artifacts{}------用来配置当project的结果输出
+buildscript{}----用来配置当前project的编译脚本的classpath
+configuration{}--当前project的依赖设置
+dependencies{}---当前project的依赖
+repositories{}---当前project的远程库
+sourceSets{}-----当前project的工程文件
+subprojects{}----当前project的子project
+publishing{}-----编译输出拓展
