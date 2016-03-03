@@ -1,0 +1,18 @@
+Android的AndroidManifest.xml文件中会定义package字段，在没启用Gradle构建系统之前，这个字段有两个作用，一个是用来命名包名；另一个是用来命名
+资源类R，例如，package="com.example.app",则资源类R的命名为com.example.app.R。而其他类要想通过资源类来使用资源，则需要要import com.example
+.app.R类。所以在没使用Gradle构建系统之前，要想改变包名是比较麻烦的，有可能要修改代码。但是，现在使用Gradle构建的话，就可以很方便了。因为
+在使用Gradle进行android构建的时候，把这上面提到的两个功能分离了，Gradle android构建框架新增了一个applicationId的概念，专门用来设置包名，
+这样就可以根据需要很方便的构建出多个不同的包名版本，而不需要去修改代码。applicationId在android的defaultConfig脚本块或者productFlavors脚本
+块都可以定义，只是后者会覆盖掉前者。但是要注意的是，只有在构建android application的时候才能用applicationId来指定包名，在构建android library
+是不能用applicationId的
+Gradle中任务主要由task来完成，而task主要包括两个阶段配置阶段和执行阶段，task的配置，就是在定义task立即执行的闭包代码，而执行阶段，就是定
+义doFirst、doLast等action的闭包代码。
+当要构建的工程需要依赖其他jar包时，可以通过dependencies脚本块来配置。dependencies脚本块是Gradle 架构的特效，并非android才有，所以并不用写
+在android脚本块内，但是android脚本块也可以加一个dependencies脚本块来配置依赖。在dependencies脚本块中加入complie fileTree(dir:'xxx',include:['..',])
+就算是把构建依赖包加入了。
+当构建需要依赖其他library工程时，则构建就变成了多工程构建了。需要在根目录或者在主工程目录加入一个settings.gradle脚本文件，来指明多工程构建
+需要用到的工程，指明工程通过include 方法来实现。当settings.gradle在主工程目录中时，不需要在include中指定主工程。include方法传入的是各个
+工程的名字，通常情况下，子工程在主工程的子目录中，这样Gradle可以直接找到子工程，但是，有些时候依赖的子工程并不在当前主工程所在的目录，而是
+在另一个目录或者磁盘上，这个时候，Gradle可能会找不到子工程，这个时候就需要我们主动指明子工程所在的目录了。可以通关project("xxxx"),xxx是子
+工程的名字，这样可以找到子工程对象，然后通过设置属性projectDir，例如：project("xxx").projectDir = new File(settingsDir,"../../..")来达到
+设定子工程的路径。然后，再在dependencies脚本块中加入compile project("xxx")告诉Gradle构建的时候也要构建子工程。
