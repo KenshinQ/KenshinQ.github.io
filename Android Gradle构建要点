@@ -16,3 +16,12 @@ Gradle中任务主要由task来完成，而task主要包括两个阶段配置阶
 在另一个目录或者磁盘上，这个时候，Gradle可能会找不到子工程，这个时候就需要我们主动指明子工程所在的目录了。可以通关project("xxxx"),xxx是子
 工程的名字，这样可以找到子工程对象，然后通过设置属性projectDir，例如：project("xxx").projectDir = new File(settingsDir,"../../..")来达到
 设定子工程的路径。然后，再在dependencies脚本块中加入compile project("xxx")告诉Gradle构建的时候也要构建子工程。
+构建遇到的问题：
+1.当进行多project构建时，提示Configuration for name "default" not found错误，则是因为某一个子project的build.gradle没有找到，这时需要去查看
+  include的子project的路径配置的是否正确，然后查看子project所在目录是否已有build.gradle存在。
+2.当构建最后打包时，提示duplicate files...有重复文件则一般是可能依赖的不同的.jar中包含有同样名字的文件，你可以通过packageOption脚本块，exclude
+  排除掉某一个文件，以便可以正常打包。
+3.当构建的project需要引入依赖的.so库的时候，可以通过给jniLibs.srcDirs赋值来指定.so库的路径，这里需要注意的是，jniLibs的目录中必须包含不同
+  平台架构的文件夹，如armeabi-v7a、armeabi、x86等等，然后在各自的平台中放各自平台的.so文件，这样在打包apk的时候，Gradle才能正常的把.so文件
+  打包进apk中。
+4.
