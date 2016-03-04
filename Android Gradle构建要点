@@ -24,4 +24,6 @@ Gradle中任务主要由task来完成，而task主要包括两个阶段配置阶
 3.当构建的project需要引入依赖的.so库的时候，可以通过给jniLibs.srcDirs赋值来指定.so库的路径，这里需要注意的是，jniLibs的目录中必须包含不同
   平台架构的文件夹，如armeabi-v7a、armeabi、x86等等，然后在各自的平台中放各自平台的.so文件，这样在打包apk的时候，Gradle才能正常的把.so文件
   打包进apk中。
-4.
+4.构建是需要引入本地的aar包时，需要注意，目前Gradle android对引入aar包没有特别好的支持，只能是配置本地的仓库来查找并引入aar包。就是为project
+  增加repositories脚本块，并在脚本块中通过flatDir:{ dir ''}来指定仓库路径，然后在dependencies脚本块中通过方法complie(name:'',ext:'')来
+  引入编译aar包。需要特别注意的是，里的repositories并不是buildScript中的那个，而是和它同级的，属于project对象的。
