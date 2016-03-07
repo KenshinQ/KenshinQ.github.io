@@ -1,0 +1,9 @@
+Android中用于进行消息处理的利器Looper、Handler、Message
+Looper一个循环迭代器，它作用于一个线程且只能作用一个线程。Looper循环处理当前线程的Message Queue（消息队列），把消息队列中的消息不断的分发
+给消息的目标处理。
+Handler，异步处理大师，用于进行执行异步任务。Handler既扮演了往Message Queue添加消息的角色，同时也扮演了处理消息的角色（只处理自己发出的消
+息），可以通过Handler的sendMessage方法通知Message Queue将要执行一个任务，然后就等待Looper循环迭代，将消息分发给Handler处理，因为一个Looper
+是属于一个线程的，所以它只在它所属的线程中进行循环迭代，于是任务也就在那个线程中执行了，这样也就达到了异步执行任务的效果。Handler会有一个
+关联的Looper和Message Queue，Handler在创建的时候，默认关联当前线程的Looper和Message Queue
+Message，在整个消息处理机制中，用Message来封装要执行的任务，虽然可以使用Message的构造函数来创建消息，但为了节省资源，最好使用Message.obtain
+来从消息池中获取空的消息来使用。
