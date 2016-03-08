@@ -1,0 +1,8 @@
+在Android应用中所有的可视化元素都是一个View（视图）,比如Button、Text等都是View的子类。
+同时，根据在android中的功能又可以分为两大类，一种是用来显示的控件比如Button；还有一种是用来布局的称为Layout，Layout也是View的子类，同时
+它也是View的容器，管理子View的位置大小布局，所有的显示的View都必须属于某一个Layout。根据布局的方式不同，android中主要有五大类Layout,
+LinearLayout RelativeLayout AbsoluteLayout FrameLayout TableLayout。Layout作为View的容器，主要作用就是用来布局其中包含的子View。Layout
+中都实现了LayoutParam子类，用来以不同的方式布局子View。在layout.xml中，当View在某一种Layout内部时，该View就可以配置属于该Layout的布局属性
+比如当Button是LinearLayout的一个子元素，那么Button控件的xml配置中就可以设置LinearLayout赋予它的布局属性，像layout_width、layout_height。
+如果，layout.xml中的某一个控件不是任何Layout的子元素，则它的任何布局属性都将失效。(注意：View既是显示控件的父类，也是布局控件Layout的父类
+，所以上面提到规则Layout也是有效的，而且也意味着Layout可以嵌套)。
