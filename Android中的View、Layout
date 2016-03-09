@@ -6,3 +6,7 @@ LinearLayout RelativeLayout AbsoluteLayout FrameLayout TableLayout。Layout作�
 比如当Button是LinearLayout的一个子元素，那么Button控件的xml配置中就可以设置LinearLayout赋予它的布局属性，像layout_width、layout_height。
 如果，layout.xml中的某一个控件不是任何Layout的子元素，则它的任何布局属性都将失效。(注意：View既是显示控件的父类，也是布局控件Layout的父类
 ，所以上面提到规则Layout也是有效的，而且也意味着Layout可以嵌套)。
+一个View的显示都要经过三个阶段：onMeasure()、onLayout()、onDraw。onMeasure确定View的尺寸，onLayout阶段确定子View的布局位置，上面已经介绍
+过了，布局的功能由布局类来完成，所以其实只Layout的子类才会实现onLayout的方法，而纯显示的控件如Button中onLayout方法是空的。View有一个方
+法layout(),使用这个方法里可以设置View(视图)的布局位置，在这个方法中会调用onLayout方法来布局其子View(视图)。在onDraw()方法中就是具体的
+绘制内容的逻辑了。
