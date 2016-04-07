@@ -41,6 +41,7 @@ Groovy中脚本类对象会有一个delegate属性，所以Gradle中，其他gra
   - sourceSets{}-----当前project的工程文件
   - subprojects{}----当前project的子project
   - publishing{}-----编译输出拓展
+
 ####三、Gradle Wrapper使用
   *使用Gradle Wrapper来构建，可以使得构建的开发人员，不用提前安装好Gradle也可以正常构建，而且，可以避免不同的开放人员在各自的机子上安装的Gradle版本不同，而导致构建出现问题。使用Gradle Wrapper可以用来保证工程的构建始终使用统一的Gradle版本来构建工程。*
 - 可以通过在工程的根目录上执行gradle wrapper命令来执行wrapper任务，会为使用gradle wrapper编译生成必要的文件，只需要执行一次就可以。
