@@ -1,7 +1,7 @@
 ##学习Gradle
 *Gradle是一个新的构建工具，使用Groovy语言来作为构建任务的描述语言。*
 
-###一、Groovy语言基础
+####一、Groovy语言基础
 - Groovy是在java的基础上扩展出来的脚本语言，完美兼容java的语法，同时它又带来了脚本语言如python、ruby等语言的特性。
 - Groovy支持动态类型，定义变量的时候不需要指定变量类型。定义变量的关键字是def。
 - Groovy定义函数时，参数也不需要类型。函数的最后一行代码的结果被作为函数的返回值返回。
@@ -15,7 +15,7 @@
 - 使用Gradle来编译一个待编译的工程都叫一个projcet,而每一个project在的构建包含一系列的Task，而编译一个project包含多少个task，是由编译脚本指定的插件决定的。插件是什么呢？插件是用来定义task，并执行task的东西。
 - Gradle作为一个框架，负责定义流程和规则，而具体的编译工作则由具体的插件来完成。比如编译Java有java插件，编译android app有android app插件，编译android library有android library 插件。每一个project对应一个build.gradle脚本文件，Gradle支持多project一起构建，当要多project一起构建的时候，需要在根project目录添加一个settings.gradle文件来指定要一起构建的工程。
 
-####Gradle的工作流程是：
+####二、Gradle的工作流程是：
 1. 初始化阶段，这个时候如果有settings.gradle，则会执行settings.gradle
 2. 配置阶段，这个时候每个project的build.gradle都会被解析，以建立任务的有向图，确定执行过程中任务的依赖关系
 3. 执行阶段，你在执行命令gradle xxx，xxx指定的任务链上的所有任务全部会按依赖关系执行一遍。因为Gradle是基于Groovy的，所以Gradle脚本在执行的时候也会被转换为java类对象。
@@ -32,12 +32,20 @@ Groovy中脚本类对象会有一个delegate属性，所以Gradle中，其他gra
 脚本对象，并且，默认设置它的delegate属性为加载它的project对象。
 6. Gradle中的Project对象有一些预置的script block脚本块，通常构建的配置都在这些脚本块中进行，这些脚本块的本质呢，基本上就是闭包代码。
 有一些常见的script block需要熟悉：
-allprojects{}----用来配置当前project和所有子project
-artifacts{}------用来配置当project的结果输出
-buildscript{}----用来配置当前project的编译脚本的classpath
-configuration{}--当前project的依赖设置
-dependencies{}---当前project的依赖
-repositories{}---当前project的远程库
-sourceSets{}-----当前project的工程文件
-subprojects{}----当前project的子project
-publishing{}-----编译输出拓展
+  - allprojects{}----用来配置当前project和所有子project
+  - artifacts{}------用来配置当project的结果输出
+  - buildscript{}----用来配置当前project的编译脚本的classpath
+  - configuration{}--当前project的依赖设置
+  - dependencies{}---当前project的依赖
+  - repositories{}---当前project的远程库
+  - sourceSets{}-----当前project的工程文件
+  - subprojects{}----当前project的子project
+  - publishing{}-----编译输出拓展
+####三、Gradle Wrapper使用
+  *使用Gradle Wrapper来构建，可以使得构建的开发人员，不用提前安装好Gradle也可以正常构建，而且，可以避免不同的开放人员在各自的机子上安装的Gradle版本不同，而导致构建出现问题。使用Gradle Wrapper可以用来保证工程的构建始终使用统一的Gradle版本来构建工程。*
+- 可以通过在工程的根目录上执行gradle wrapper命令来执行wrapper任务，会为使用gradle wrapper编译生成必要的文件，只需要执行一次就可以。
+  wrapper任务是始终可以执行的，当执行这个命令时可以通过--gradle-version来指定gralde wrapper使用的gradle版本，如果不指定，则会生成指
+  向当前执行环境中gradle版本的gradle wrapper。
+- gradle/wrapper/gradle-wrapper.properties文件中可以配置需要使用的Gradle的版本的下载地址。
+- 通过Gradle wrapper来指定特定版本的Gradle，构建的时候，如果本地没有wrapper指定的版本的Gradle，会主动去下载对应的Gradle版本。
+- 配置好Gradle wrapper以后，接下来的构建任务都使用gradlew xxx来执行
